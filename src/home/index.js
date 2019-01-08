@@ -3,7 +3,7 @@ import NewList from './NewList'
 import './Home.css'
 import List from './List'
 
-const Home = (props) => (
+const Home = () => (
     <div className='page-container'>
         <NewList />
         <List />
