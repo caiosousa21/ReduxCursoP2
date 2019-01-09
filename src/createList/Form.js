@@ -4,7 +4,11 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Button from '@material-ui/core/Button'
 
-const units = ['Kg', 'Lt', 'Un']
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { Creators as FormActions } from '../store/actions/form'
+
+const units = ['Kilos', 'Litros', 'Unidades']
 
 class Form extends Component {
     state = {
@@ -16,6 +20,19 @@ class Form extends Component {
         showErrors: false,
     };
 
+    componentDidUpdate(prevProps) {
+        if (this.props.form.action === 'update' && prevProps.form.productToUpdate.id !== this.props.form.productToUpdate.id) {
+            const { product, quantity, unit, price } = this.props.form.productToUpdate
+            this.setState({
+                product,
+                quantity,
+                unit,
+                price,
+                showErrors: false,
+            })
+        }
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -24,7 +41,7 @@ class Form extends Component {
 
     handleSubmit = () => {
         const { list, product, quantity, unit, price } = this.state
-        if (!list || !product || !quantity || !unit ) {
+        if (!list || !product || !quantity || !unit) {
             this.setState({ showErrors: true })
         } else {
             this.props.addProduct({ product, quantity, unit, price }, list);
@@ -98,4 +115,10 @@ class Form extends Component {
     }
 }
 
-export default Form
+const mapStateToProps = state => ({
+    form: state.form
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators(FormActions, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form)
