@@ -33,15 +33,10 @@ export default function list(state = INITIAL_STATE, action){
     }
 }
 
+//Helpers
 function getItemTotal(product){
     return product.price * product.quantity
 }
-
-export const getListTotal = createSelector(
-    state => state.list.items,
-    items => items.reduce((total, item) => total+item.total,0)
-    
-)
 
 function toggleItem(items, productId){
     const index = items.findIndex(item=>item.id===productId);
@@ -51,3 +46,19 @@ function toggleItem(items, productId){
         ...items.slice(index+1)
     ];
 }
+
+//Selectors
+export const getListTotal = createSelector(
+    state => state.list.items,
+    items => items.reduce((total, item) => total+item.total,0) 
+)
+
+export const getOpenedItems = createSelector(
+    state => state.list.items,
+    items => items.filter(item => !item.checked).length
+)
+
+export const getClosedItems = createSelector(
+    state => state.list.items,
+    items => items.filter(item => item.checked).length
+)
