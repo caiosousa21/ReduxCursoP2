@@ -21,6 +21,7 @@ class CreateList extends React.Component {
                             item={item}
                             deleteProduct={this.props.deleteProduct}
                             key={item.id}
+                            toggleProduct={this.props.toggleProduct}
                         />
                     )
                     }
