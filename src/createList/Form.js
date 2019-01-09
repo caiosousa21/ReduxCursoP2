@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Button from '@material-ui/core/Button'
 
-const units = ['kg', 'lt', 'un']
+const units = ['Kg', 'Lt', 'Un']
 
 class Form extends Component {
     state = {
@@ -24,12 +24,11 @@ class Form extends Component {
 
     handleSubmit = () => {
         const { list, product, quantity, unit, price } = this.state
-        if (!list || !product || !quantity || !unit || !price) {
+        if (!list || !product || !quantity || !unit ) {
             this.setState({ showErrors: true })
         } else {
             this.props.addProduct({ product, quantity, unit, price }, list);
             this.setState({
-                list: '',
                 product: '',
                 quantity: '',
                 unit: '',

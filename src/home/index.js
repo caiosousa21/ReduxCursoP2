@@ -2,12 +2,22 @@ import React from 'react'
 import NewList from './NewList'
 import './Home.css'
 import List from './List'
+import {connect} from 'react-redux'
 
-const Home = () => (
+import {getListTotal} from '../store/reducers/list'
+
+const Home = (props) => (
     <div className='page-container'>
         <NewList />
-        <List />
+        { props.list.items.length > 0 &&
+            <List list={props.list.list} total={props.total}/>
+        }
     </div>
 )
 
-export default Home;
+const mapStateToProps = state =>({
+    list: state.list,
+    total: getListTotal(state),
+});
+
+export default connect(mapStateToProps, null)(Home);
