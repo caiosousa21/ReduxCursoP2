@@ -44,7 +44,7 @@ class Form extends Component {
         if (!list || !product || !quantity || !unit) {
             this.setState({ showErrors: true })
         } else {
-            this.props.form.action === 'new' ? this.addItem(list, product, quantity, unit, price) : this.updateItem();
+            this.props.form.action === 'new' ? this.addItem(list, product, quantity, unit, price) : this.updateItem(list, product, quantity, unit, price);
         }
     }
 
