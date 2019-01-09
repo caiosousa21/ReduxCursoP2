@@ -14,9 +14,16 @@ class CreateList extends React.Component {
     render() {
         return (
             <div className='page-container'>
-                <Form addProduct={this.addProduct}/>
+                <Form addProduct={this.addProduct} />
                 <div className='list-items-container'>
-                    {this.props.list.items.map(item=><ListItem item={item} key={item.product}/>)}
+                    {this.props.list.items.map(item =>
+                        <ListItem
+                            item={item}
+                            deleteProduct={this.props.deleteProduct}
+                            key={item.id}
+                        />
+                    )
+                    }
                 </div>
             </div>
         )
