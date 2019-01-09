@@ -6,10 +6,12 @@ import Header from './common/header'
 import Home from './home/index'
 import CreateList from './createList/index'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './store'
 
 const theme = createMuiTheme({
-  typography:{
-    useNextVariants:true,
+  typography: {
+    useNextVariants: true,
   },
   palette: {
     primary: {
@@ -24,19 +26,20 @@ const theme = createMuiTheme({
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <BrowserRouter>
-        <div>
-        <Header />
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/lista' component={CreateList} />
-          </Switch>
-        </div>
-          
-        </BrowserRouter>
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <BrowserRouter>
+            <div>
+              <Header />
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/lista' component={CreateList} />
+              </Switch>
+            </div>
 
+          </BrowserRouter>
+        </MuiThemeProvider>
+      </Provider>
     )
   }
 }
