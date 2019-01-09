@@ -21,7 +21,7 @@ class Form extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.form.action === 'update' && prevProps.form.productToUpdate.id !== this.props.form.productToUpdate.id) {
+        if (this.props.form.action === 'update' && prevProps.form.productToUpdate !== this.props.form.productToUpdate) {
             const { product, quantity, unit, price } = this.props.form.productToUpdate
             this.setState({
                 product,
@@ -44,15 +44,29 @@ class Form extends Component {
         if (!list || !product || !quantity || !unit) {
             this.setState({ showErrors: true })
         } else {
-            this.props.addProduct({ product, quantity, unit, price }, list);
-            this.setState({
-                product: '',
-                quantity: '',
-                unit: '',
-                price: '',
-                showErrors: false,
-            })
+            this.props.form.action === 'new' ? this.addItem(list, product, quantity, unit, price) : this.updateItem();
         }
+    }
+
+    addItem = (list, product, quantity, unit, price ) => {
+        this.props.addProduct({ product, quantity, unit, price }, list);
+        this.clearState();
+    }
+
+    updateItem = (list, product, quantity, unit, price) => {
+        const {id, checked} = this.props.form.productToUpdate
+        this.props.updateProduct({ product, quantity, unit, price, id, checked}, list)
+        this.clearState();
+    }
+//aula 65
+    clearState = () => {
+        this.setState({
+            product: '',
+            quantity: '',
+            unit: '',
+            price: '',
+            showErrors: false,
+        })
     }
 
     render() {
@@ -67,7 +81,7 @@ class Form extends Component {
                         required
                         error={!this.state.list && this.state.showErrors}
                     />
-                    <Button variant='outlined' onClick={this.handleSubmit} color='secondary'>Adicionar</Button>
+                    <Button variant='outlined' onClick={this.handleSubmit} color='secondary'>Salvar</Button>
                 </div>
                 <div className='form-row'>
                     <TextField
