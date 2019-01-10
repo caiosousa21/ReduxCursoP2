@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { Creators as ListActions } from '../store/actions/list'
 import { bindActionCreators } from 'redux'
 
+import NewItem from './NewItem'
+
 class CreateList extends React.Component {
     addProduct = (product, list) => {
         this.props.addProduct(product, list)
@@ -24,8 +26,8 @@ class CreateList extends React.Component {
                             key={item.id}
                             toggleProduct={this.props.toggleProduct}
                         />
-                    )
-                    }
+                    )}
+                    {this.props.match.params.action === 'edicao' && <NewItem list={this.props.list.list}/>}
                 </div>
             </div>
         )
