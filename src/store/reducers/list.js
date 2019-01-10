@@ -11,6 +11,7 @@ export default function list(state = INITIAL_STATE, action) {
     switch (action.type) {
         case Types.ADD_PRODUCT:
             return {
+                ...state,
                 list: action.list,
                 items: [
                     ...state.items,
@@ -29,8 +30,14 @@ export default function list(state = INITIAL_STATE, action) {
             }
         case Types.UPDATE_PRODUCT:
             return {
+                ...state,
                 list: action.list,
                 items: updateProduct(state.items, action.product),
+            }
+        case Types.NEW_LIST:
+            return {
+               ...INITIAL_STATE,
+               date: getDate(),
             }
         default:
             return state;
@@ -42,11 +49,11 @@ function getItemTotal(product) {
     return product.price * product.quantity
 }
 
-function updateProduct(items, product){
+function updateProduct(items, product) {
     const index = items.findIndex(item => item.id === product.id);
     return [
         ...items.slice(0, index),
-        { ...product, total:getItemTotal(product) },
+        { ...product, total: getItemTotal(product) },
         ...items.slice(index + 1)
     ];
 }
@@ -75,3 +82,13 @@ export const getClosedItems = createSelector(
     state => state.list.items,
     items => items.filter(item => item.checked).length
 )
+
+function getDate(){
+    const data = new Date();
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }
+    return data.toLocaleDateString('pt-BR', options);
+}

@@ -6,7 +6,7 @@ import ListItem from  './ListItem';
 import './List.css'
 
 const List = (props) => (
-    <CustomCard containerClass='list-container' footer={<ListFooter total={props.total}/>} link='/lista'>
+    <CustomCard containerClass='list-container' footer={<ListFooter total={props.total}/>} link='/lista/edicao'>
         <div>
             <p className='title'>{props.list}</p>
             <div className='list-card-body'>

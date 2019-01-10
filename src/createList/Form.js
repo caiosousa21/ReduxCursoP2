@@ -24,6 +24,7 @@ class Form extends Component {
         if (this.props.form.action === 'update' && prevProps.form.productToUpdate !== this.props.form.productToUpdate) {
             const { product, quantity, unit, price } = this.props.form.productToUpdate
             this.setState({
+                list: this.props.form.listToUpdate,
                 product,
                 quantity,
                 unit,
@@ -71,6 +72,9 @@ class Form extends Component {
     }
 
     render() {
+        if(!this.props.showForm){
+            return <div></div>
+        }else{
         return (
             <form className='form-container'>
                 <div className='form-row'>
@@ -126,12 +130,13 @@ class Form extends Component {
                 </div>
 
             </form>
-        )
+        )}
     }
 }
 
-const mapStateToProps = state => ({
-    form: state.form
+const mapStateToProps = (state, ownProps) => ({
+    form: state.form,
+    showForm: state.form.action === 'update' || ownProps.url === 'novo'
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators(FormActions, dispatch)

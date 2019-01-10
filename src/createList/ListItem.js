@@ -8,13 +8,14 @@ const ListItem = (props) => (
     <CustomCard
         link='#'
         containerClass='list-item'
-        footer={<ListItemFooter deleteProduct={props.deleteProduct} item={props.item}/> }
+        footer={<ListItemFooter deleteProduct={props.deleteProduct} item={props.item} list={props.list}/> }
         image='http://lorempixel.com/output/cats-q-c-640-480-7.jpg'
+        action={()=>props.toggleProduct(props.item.id)}
     >
         <div>
             <div className='list-item-header'>
                 <Typography variant='subtitle1' component='h2'>{props.item.product}</Typography>
-                <CheckBox onClick={()=>props.toggleProduct(props.item.id)} checked={props.item.checked}/>
+                <CheckBox checked={props.item.checked}/>
             </div>
             <Typography component='p'>{props.item.quantity} {props.item.unit}</Typography>
             <Typography component='p'>R$ {props.item.price}</Typography>
